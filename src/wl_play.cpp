@@ -678,7 +678,7 @@ void CheckKeys (void)
     //
     // SECRET CHEAT CODE: TAB-G-F10
     //
-    if (Keyboard[sc_G] && Keyboard[sc_O] && Keyboard[sc_D])
+    if (Keyboard[sc_G] && Keyboard[sc_O] && Keyboard[sc_B])
     {
         WindowH = 160;
         if (godmode)
@@ -733,11 +733,19 @@ void CheckKeys (void)
             DrawPlayBorder ();
     }
 
+	// SECRET CHEAT CODE: 'VMP' (Mapa completo con secretos)
+    if (Keyboard[sc_V] && Keyboard[sc_M] && Keyboard[sc_P])
+    {
+        ViewMap ();
+        IN_ClearKeysDown ();
+        return;
+    }
+		
     //
     // OPEN UP DEBUG KEYS
     //
 #ifdef DEBUGKEYS
-    if (Keyboard[sc_BackSpace] && Keyboard[sc_LShift] && Keyboard[sc_Alt] && param_debugmode)
+    if (Keyboard[sc_B] && Keyboard[sc_K] && Keyboard[sc_Y] && param_debugmode)
     {
         ClearMemory ();
         CA_CacheGrChunk (STARTFONT + 1);
