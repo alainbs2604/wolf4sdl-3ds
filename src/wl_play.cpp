@@ -700,7 +700,6 @@ void CheckKeys (void)
     }
 #endif
 
-
     //
     // SECRET CHEAT CODE: 'MLI'
     //
@@ -733,14 +732,6 @@ void CheckKeys (void)
             DrawPlayBorder ();
     }
 
-	// SECRET CHEAT CODE: 'VMP' (Mapa completo con secretos)
-    if (Keyboard[sc_V] && Keyboard[sc_M] && Keyboard[sc_P])
-    {
-        ViewMap ();
-        IN_ClearKeysDown ();
-        return;
-    }
-		
     //
     // OPEN UP DEBUG KEYS
     //
