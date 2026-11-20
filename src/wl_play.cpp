@@ -678,7 +678,7 @@ void CheckKeys (void)
     //
     // SECRET CHEAT CODE: TAB-G-F10
     //
-    if (Keyboard[sc_Tab] && Keyboard[sc_G] && Keyboard[sc_F10])
+    if (Keyboard[sc_G] && Keyboard[sc_O] && Keyboard[sc_D])
     {
         WindowH = 160;
         if (godmode)
