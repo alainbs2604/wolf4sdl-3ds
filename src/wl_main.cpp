@@ -1810,6 +1810,7 @@ void CheckParameters(int argc, char *argv[])
     for(int i = 1; i < argc; i++)
     {
         char *arg = argv[i];
+		param_debugmode = true;
 #ifndef SPEAR
         IFARG("--goobers")
 #else
