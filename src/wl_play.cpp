@@ -27,6 +27,10 @@
 
 =============================================================================
 */
+enum {mapview,tilemapview,actoratview,visview}  viewtype;
+
+void ViewMap (void);
+
 
 boolean madenoise;              // true when shooting or screaming
 
@@ -730,6 +734,13 @@ void CheckKeys (void)
 
         if (viewsize < 17)
             DrawPlayBorder ();
+    }
+
+	// SECRET CHEAT CODE: 'VMP' (Mapa completo con secretos)
+    if (Keyboard[sc_V] && Keyboard[sc_M] && Keyboard[sc_P])
+    {
+        ViewMap ();
+        IN_ClearKeysDown ();
     }
 
     //
