@@ -753,7 +753,7 @@ void CheckKeys (void)
         IN_ClearKeysDown ();
         return;
     }
-	if (Keyboard[sc_]I && Keyboard[sc_T] && Keyboard[sc_M])
+	if (Keyboard[sc_I] && Keyboard[sc_T] && Keyboard[sc_M])
     {
         showitems ^= 1;
         SD_PlaySound (ENDBONUS2SND);
