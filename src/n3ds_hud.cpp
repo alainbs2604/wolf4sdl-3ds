@@ -228,7 +228,7 @@ static void DrawMap (int maptop, int mapbottom)
                 if (!IsSeen (x, y) && !IsSeen (x - 1, y) && !IsSeen (x + 1, y)
                         && !IsSeen (x, y - 1) && !IsSeen (x, y + 1))
                     continue;
-                if (MAPSPOT (x, y, 1) == PUSHWALL)
+                if (MAPSPOT (x, y, 1) == 98)
                     color = secretcolor;
                 else{
                     color = (tile & 0x80) ? doorcolor : wallcolor;
