@@ -29,6 +29,7 @@
 */
 
 boolean madenoise;              // true when shooting or screaming
+extern byte seen[MAPSIZE][MAPSIZE];
 
 exit_t playstate;
 
@@ -735,7 +736,7 @@ void CheckKeys (void)
 	// SECRET CHEAT CODE: 'VMP' (Revelar todo el automapa inferior)
     if (Keyboard[sc_V] && Keyboard[sc_M] && Keyboard[sc_P])
     {
-        memset (spotvis, 1, sizeof (spotvis));
+        memset (seen 1, sizeof (seen));
         WindowH = 160;
         Message ("Map revealed!");
         IN_Ack ();
