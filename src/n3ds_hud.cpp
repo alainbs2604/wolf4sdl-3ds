@@ -199,8 +199,10 @@ static void DrawMap (int maptop, int mapbottom)
     Uint32 wallcolor = SDL_MapRGB (format, 0xa8, 0xa8, 0xb8);
     Uint32 doorcolor = SDL_MapRGB (format, 0xff, 0xe6, 0x00);
     Uint32 secretcolor = SDL_MapRGB (format, 0x00, 0xff, 0x80);
-    UUint32 playercolor = SDL_MapRGB (format, 0xff, 0xff, 0xff);
+    Uint32 playercolor = SDL_MapRGB (format, 0xff, 0xff, 0xff);
     Uint32 enemycolor = SDL_MapRGB (format, 0xff, 0x00, 0x00);  // Rojo: enemigos vivos
+
+    int enemysize = (tilesize / 2 > 3) ? (tilesize / 2) : 3;
 
     cliptop = maptop;
     clipbottom = mapbottom;
@@ -242,6 +244,7 @@ static void DrawMap (int maptop, int mapbottom)
         }
     }
         // 2. Dibujar enemigos vivos
+                // 2. Dibujar enemigos vivos
         for (objtype *ob = player->next; ob; ob = ob->next)
         {
             if (ob->flags & FL_SHOOTABLE)
@@ -250,7 +253,7 @@ static void DrawMap (int maptop, int mapbottom)
                 double ey = (double) ob->y / TILEGLOBAL;
                 Fill ((int) floor (centerx + (ex - px - 0.25) * tilesize),
                       (int) floor (centery + (ey - py - 0.25) * tilesize),
-                      max (3, tilesize / 2), max (3, tilesize / 2), enemycolor);
+                      enemysize, enemysize, enemycolor);
             }
         }
     }
