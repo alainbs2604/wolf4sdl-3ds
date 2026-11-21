@@ -256,7 +256,6 @@ static void DrawMap (int maptop, int mapbottom)
                       enemysize, enemysize, enemycolor);
             }
         }
-    }
     // The player: a dot and a line toward where they look (angle in
     // degrees, 0 is east, counterclockwise).
     double angle = player->angle * M_PI / 180;
