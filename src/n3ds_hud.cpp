@@ -135,6 +135,107 @@ static const int zoomminusx = 320 - 2 * zoombuttonw - 6, zoomplusx = 320 - zoomb
 static int zoomy = -1;
 static bool zoomowntouch, zoomwastouching;
 
+// Mini-fuente 5x5 para dibujar texto limpio en la leyenda sin dependencias
+static void DrawMiniChar (int x, int y, char c, Uint32 color)
+{
+    static const unsigned char font5x5[][5] = {
+        {0x0E,0x11,0x1F,0x11,0x11}, // A
+        {0x1E,0x11,0x1E,0x11,0x1E}, // B
+        {0x0F,0x10,0x10,0x10,0x0F}, // C
+        {0x1E,0x11,0x11,0x11,0x1E}, // D
+        {0x1F,0x10,0x1E,0x10,0x1F}, // E
+        {0x1F,0x10,0x1E,0x10,0x10}, // F
+        {0x0F,0x10,0x13,0x11,0x0F}, // G
+        {0x11,0x11,0x1F,0x11,0x11}, // H
+        {0x0E,0x04,0x04,0x04,0x0E}, // I
+        {0x01,0x01,0x01,0x11,0x0E}, // J
+        {0x11,0x12,0x1C,0x12,0x11}, // K
+        {0x10,0x10,0x10,0x10,0x1F}, // L
+        {0x11,0x1B,0x15,0x11,0x11}, // M
+        {0x11,0x19,0x15,0x13,0x11}, // N
+        {0x0E,0x11,0x11,0x11,0x0E}, // O
+        {0x1E,0x11,0x1E,0x10,0x10}, // P
+        {0x0E,0x11,0x15,0x12,0x0D}, // Q
+        {0x1E,0x11,0x1E,0x12,0x11}, // R
+        {0x0F,0x10,0x0E,0x01,0x1E}, // S
+        {0x1F,0x04,0x04,0x04,0x04}, // T
+        {0x11,0x11,0x11,0x11,0x0E}, // U
+        {0x11,0x11,0x11,0x0A,0x04}, // V
+        {0x11,0x11,0x15,0x1B,0x11}, // W
+        {0x11,0x0A,0x04,0x0A,0x11}, // X
+        {0x11,0x0A,0x04,0x04,0x04}, // Y
+        {0x1F,0x02,0x04,0x08,0x1F}  // Z
+    };
+
+    if (c >= 'A' && c <= 'Z')
+    {
+        const unsigned char *glyph = font5x5[c - 'A'];
+        for (int row = 0; row < 5; row++)
+            for (int col = 0; col < 5; col++)
+                if (glyph[row] & (0x10 >> col))
+                    Fill (x + col, y + row, 1, 1, color);
+    }
+    else if (c == ':')
+    {
+        Fill (x + 2, y + 1, 1, 1, color);
+        Fill (x + 2, y + 3, 1, 1, color);
+    }
+    else if (c == '+')
+    {
+        Fill (x + 2, y + 1, 1, 3, color);
+        Fill (x + 1, y + 2, 3, 1, color);
+    }
+    else if (c == '/')
+    {
+        for (int i = 0; i < 5; i++)
+            Fill (x + 4 - i, y + i, 1, 1, color);
+    }
+    else if (c == '?')
+    {
+        Fill (x + 1, y, 3, 1, color);
+        Fill (x + 4, y + 1, 1, 1, color);
+        Fill (x + 2, y + 2, 2, 1, color);
+        Fill (x + 2, y + 4, 1, 1, color);
+    }
+}
+
+static void DrawMiniText (int x, int y, const char *str, Uint32 color)
+{
+    for (int i = 0; str[i]; i++)
+        DrawMiniChar (x + i * 6, y, str[i], color);
+}
+
+static void DrawLegendOverlay (int maptop, int mapbottom)
+{
+    SDL_PixelFormat *fmt = target->format;
+    Uint32 bg      = SDL_MapRGB (fmt, 0x10, 0x12, 0x1c);
+    Uint32 border  = SDL_MapRGB (fmt, 0x70, 0x80, 0xa0);
+    Uint32 title   = SDL_MapRGB (fmt, 0xff, 0xe6, 0x00);
+    Uint32 txt     = SDL_MapRGB (fmt, 0xe8, 0xe8, 0xf0);
+    Uint32 codecol = SDL_MapRGB (fmt, 0x00, 0xd0, 0xff);
+
+    int w = 136, h = 64;
+    int x0 = (320 - w) / 2;
+    int y0 = maptop + (mapbottom - maptop - h) / 2;
+    if (y0 < maptop + 2) y0 = maptop + 2;
+
+    Fill (x0, y0, w, h, border);
+    Fill (x0 + 1, y0 + 1, w - 2, h - 2, bg);
+
+    DrawMiniText (x0 + 10, y0 + 6, "CHEATS (HOLD)", title);
+
+    const char *codes[] = { "GOB", "VMP", "ENM", "ITM" };
+    const char *descs[] = { ": GOD MODE", ": MAP/SECRETS", ": ENEMIES", ": ITEMS" };
+
+    for (int i = 0; i < 4; i++)
+    {
+        int ry = y0 + 18 + i * 10;
+        DrawMiniText (x0 + 10, ry, codes[i], codecol);
+        DrawMiniText (x0 + 28, ry, descs[i], txt);
+    }
+}
+
+
 static void DrawZoomButtons (int y)
 {
     Uint32 frame = SDL_MapRGB (target->format, 0x60, 0x60, 0x70);
