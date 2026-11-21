@@ -407,54 +407,13 @@ static void DrawMap (int maptop, int mapbottom)
          // 1. Dibujar ítems por tipo
         for (statobj_t *statptr = statobjlist; statptr != laststatobj; statptr++)
         {
-         if (statptr->shapenum == -1 || !(statptr->flags & FL_BONUS))
+            if (statptr->shapenum == -1 || statptr->itemnumber <= 0)
                 continue;
 
-            Uint32 color;
-            switch (statptr->itemnumber)
-            {
-                // Llaves y 1UP
-                case bo_key1:
-                case bo_key2:
-                case bo_key3:
-                case bo_key4:
-                    color = itemcolor;
-                    break;
-
-                // Armas
-                case bo_machinegun:
-                case bo_chaingun:
-                    color = itemcolor;
-                    break;
-
-                // Salud
-                case bo_food:
-                case bo_firstaid:
-                case bo_alpo:
-                    color = itemcolor;
-                    break;
-
-                // Munición
-                case bo_clip:
-                case bo_clip2:
-                    color = itemcolor;
-                    break;
-
-                // Tesoros (cruces, cálices, cofres, coronas) y demás objetos recogibles
-                case bo_cross:
-                case bo_chalice:
-                case bo_bible:
-                case bo_crown:
-                    color = itemcolor;
-                    break;
-
-                // Ignorar decoración (lámparas, mesas, esqueletos, columnas...)
-                default:
-                    color = itemcolor;
-                    break;
-            }
-        }
-        // 2. Dibujar enemigos vivos
+            Fill ((int) floor (centerx + (statptr->tilex - px + 0.3) * tilesize),
+                  (int) floor (centery + (statptr->tiley - py + 0.3) * tilesize),
+                  itemsize, itemsize, itemcolor);
+        }// 2. Dibujar enemigos vivos
          if (showenemies){
              
             for (objtype *ob = player->next; ob; ob = ob->next)
