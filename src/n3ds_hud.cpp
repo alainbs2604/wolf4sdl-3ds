@@ -173,24 +173,62 @@ bool N3DS_MapZoomUpdate (bool touching, int x, int y)
             else if (x >= zoomplusx && mapzoom < NUMMAPZOOMS - 1)
                 mapzoom++;
         }
+        else if (y >= lastmaptop && y < lastmapbottom)
+        {
+            // Inicia toque dentro del área del mapa (fuera de botones de zoom y teclado)
+            mappantouch = true;
+            mappanned = false;
+            panlastx = x;
+            panlasty = y;
+        }
+    }
+    else if (touching && mappantouch)
+    {
+        int dx = x - panlastx;
+        int dy = y - panlasty;
+
+        // Si mueves el lápiz/dedo más de 3 píxeles, arrastra el mapa
+        if (mappanned || abs (dx) > 3 || abs (dy) > 3)
+        {
+            const int tilesize = zoomsizes[mapzoom];
+            mapoffx -= (double) dx / tilesize;
+            mapoffy -= (double) dy / tilesize;
+            panlastx = x;
+            panlasty = y;
+            mappanned = true;
+        }
     }
     else if (!touching)
     {
+        // Si diste un toque rápido sin arrastrar en el mapa, vuelve a centrarte en el jugador
+        if (mappantouch && !mappanned)
+        {
+            mapoffx = 0.0;
+            mapoffy = 0.0;
+        }
         zoomowntouch = false;
+        mappantouch = false;
+        mappanned = false;
     }
 
     zoomwastouching = touching;
-    return zoomowntouch;
+    return zoomowntouch || mappantouch;
 }
 
 bool N3DS_MapOwnsTouch (void)
 {
-    return zoomowntouch;
+    return zoomowntouch || mappantouch;
 }
 
 // Between maptop and mapbottom, centred on the player, at the zoom chosen.
+static double mapoffx = 0.0, mapoffy = 0.0;
+static int lastmaptop = 0, lastmapbottom = 0;
+static bool mappantouch = false, mappanned = false;
+static int panlastx = 0, panlasty = 0;
 static void DrawMap (int maptop, int mapbottom)
 {
+    lastmaptop = maptop;
+    lastmapbottom = mapbottom;
     if (mapzoom < 0 || mapzoom >= NUMMAPZOOMS)
         mapzoom = 2;
 
@@ -212,8 +250,10 @@ static void DrawMap (int maptop, int mapbottom)
     clipbottom = mapbottom;
     Fill (0, maptop, 320, mapbottom - maptop, background);
 
-    double px = (double) player->x / TILEGLOBAL;
-    double py = (double) player->y / TILEGLOBAL;
+    //double px = (double) player->x / TILEGLOBAL;
+    //double py = (double) player->y / TILEGLOBAL;
+    double px = (double) player->x / TILEGLOBAL + mapoffx;
+    double py = (double) player->y / TILEGLOBAL + mapoffy;
     double centerx = 160;
     double centery = (maptop + mapbottom) / 2.0;
 
