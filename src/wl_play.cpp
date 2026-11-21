@@ -674,7 +674,7 @@ void CheckKeys (void)
     scan = LastScan;
 
 
-#ifdef SPEAR
+//#ifdef SPEAR
     //
     // SECRET CHEAT CODE: TAB-G-F10
     //
@@ -698,7 +698,7 @@ void CheckKeys (void)
         IN_ClearKeysDown ();
         return;
     }
-#endif
+//#endif
 
     //
     // SECRET CHEAT CODE: 'MLI'
