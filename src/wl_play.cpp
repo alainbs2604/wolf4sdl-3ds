@@ -30,6 +30,8 @@
 
 boolean madenoise;              // true when shooting or screaming
 extern byte seen[MAPSIZE][MAPSIZE];
+extern bool showenemies;
+extern bool showitems;
 
 exit_t playstate;
 
@@ -744,7 +746,20 @@ void CheckKeys (void)
         IN_ClearKeysDown ();
         return;
     }
-
+	if (Keyboard[sc_E] && Keyboard[sc_N] && Keyboard[sc_M])
+    {
+        showenemies ^= 1;
+        SD_PlaySound (ENDBONUS2SND);
+        IN_ClearKeysDown ();
+        return;
+    }
+	if (Keyboard[sc_]I && Keyboard[sc_T] && Keyboard[sc_M])
+    {
+        showitems ^= 1;
+        SD_PlaySound (ENDBONUS2SND);
+        IN_ClearKeysDown ();
+        return;
+    }
     //
     // OPEN UP DEBUG KEYS
     //
