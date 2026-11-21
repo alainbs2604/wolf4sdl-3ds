@@ -2,7 +2,8 @@
 
 Port of Wolfenstein 3D and Spear of Destiny to the Nintendo 3DS, based on [Wolf4SDL](https://github.com/hax0kartik/wolf4sdl-3ds) by hax0kartik. This fork (branch `n3ds`) adds New 3DS controls, a HUD and a map on the bottom screen, 60 FPS and `.cia` builds.
 
-Runs at full speed on New 3DS.
+Runs at full speed on New 3DS
+Esto es solo un Fork de [wolf4sdl-3ds](https://github.com/AlexanderV387/wolf4sdl-3ds) con algunas mejoras. Las nuevas características están descritas en español, el resto las características en ingles son las originales
 
 ## Features
 
@@ -18,7 +19,17 @@ Runs at full speed on New 3DS.
 - No DOS memory check screen at startup.
 - **Spear of Destiny mission packs:** if the `sod` folder has more than one mission (*Return to Danger* `*.sd2`, *Ultimate Challenge* `*.sd3`), a menu at startup lets you choose. Each mission keeps its own config and savegames.
 - `.3dsx` and `.cia` builds for Wolfenstein 3D (full and shareware) and Spear of Destiny (full and demo).
-- Mapa Mejorado: Ahora el mapa no se resetea al cargar una partida guardada. Los secretos y los enemigos se muestran en el mapa.
+- Modo dios activable con la combinación GOB
+- Mapa Mejorado:
+     - Ahora el mapa no se resetea al cargar una partida guardada.
+     - Los secretos se muestran en el mapa en color verde
+     - El personaje es blanco en lugar de rojo
+     - Los enemigos se puede mostrar o ocultar con el código ENM (aparecen como un punto rojo)
+     - El mapa se puede desplazar con la táctil para una mejor visión de zonas alejadas y se centra con un toque
+     - Con VMP se puede ver todo el mapa completo
+     - Nuevo boton para conocer los nuevos trucos activables
+
+       
 
 ## Installing
 
