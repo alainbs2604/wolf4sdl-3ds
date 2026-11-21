@@ -17,6 +17,7 @@ boolean showfps = false;
 boolean weaponbar = false;
 int mapzoom = 2;
 bool showenemies = false;
+bool showitems = false;
 
 // Tiles seen since the level started: the original has no map, so this one
 // shows only what the player has seen (spotvis, cleared every frame).
@@ -202,8 +203,10 @@ static void DrawMap (int maptop, int mapbottom)
     Uint32 secretcolor = SDL_MapRGB (format, 0x00, 0xff, 0x80);
     Uint32 playercolor = SDL_MapRGB (format, 0xff, 0xff, 0xff);
     Uint32 enemycolor = SDL_MapRGB (format, 0xff, 0x00, 0x00);  // Rojo: enemigos vivos
-
+    Uint32 itemcolor = SDL_MapRGB (format, 0x00, 0xd0, 0xff);   // Cian: ítems y llaves
+    
     int enemysize = (tilesize / 2 > 3) ? (tilesize / 2) : 3;
+    int itemsize = (tilesize / 2 > 2) ? (tilesize / 2) : 2;
 
     cliptop = maptop;
     clipbottom = mapbottom;
@@ -244,6 +247,55 @@ static void DrawMap (int maptop, int mapbottom)
                   tilesize, tilesize, color);
         }
     }
+         // 1. Dibujar ítems por tipo
+        for (statobj_t *statptr = &statobjlist; statptr != laststatobj; statptr++)
+        {
+            if (statptr->shapenum == -1)
+                continue;
+
+            Uint32 color;
+            switch (statptr->itemnumber)
+            {
+                // Llaves y 1UP
+                case bo_key1:
+                case bo_key2:
+                case bo_key3:
+                case bo_key4:
+                case bo_1up:
+                    color = itemcolor;
+                    break;
+
+                // Armas
+                case bo_machinegun:
+                case bo_chaingun:
+                    color = itemcolor;
+                    break;
+
+                // Salud
+                case bo_food:
+                case bo_firstaid:
+                case bo_alpo:
+                    color = itemcolor;
+                    break;
+
+                // Munición
+                case bo_clip:
+                case bo_clip2:
+                    color = itemcolor;
+                    break;
+
+                // Tesoros (cruces, cálices, cofres, coronas) y demás objetos recogibles
+                case bo_cross:
+                case bo_chalice:
+                case bo_bible:
+                case bo_crown:
+                    color = itemcolor;
+                    break;
+
+                // Ignorar decoración (lámparas, mesas, esqueletos, columnas...)
+                default:
+                    continue;
+            }
         // 2. Dibujar enemigos vivos
          if (showenemies){
              
