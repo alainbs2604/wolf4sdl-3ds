@@ -18,6 +18,7 @@ boolean weaponbar = false;
 int mapzoom = 2;
 bool showenemies = false;
 bool showitems = false;
+bool showlegend = false;
 
 // Tiles seen since the level started: the original has no map, so this one
 // shows only what the player has seen (spotvis, cleared every frame).
@@ -252,6 +253,10 @@ static void DrawZoomButtons (int y)
         Fill (x, y, zoombuttonw, zoombuttonh, frame);
         Fill (x + 1, y + 1, zoombuttonw - 2, zoombuttonh - 2, face);
         Fill (x + 6, y + zoombuttonh / 2 - 1, zoombuttonw - 12, 2, usable ? sign : dim);
+        int helpx = zoomminusx - zoombuttonw - 4;
+        Fill (helpx, y, zoombuttonw, zoombuttonh, frame);
+        Fill (helpx + 1, y + 1, zoombuttonw - 2, zoombuttonh - 2, showlegend ? sign : face);
+        DrawMiniChar (helpx + zoombuttonw / 2 - 2, y + zoombuttonh / 2 - 2, '?', showlegend ? face : sign);
         if (i == 1)
             Fill (x + zoombuttonw / 2 - 1, y + 4, 2, zoombuttonh - 8, usable ? sign : dim);
     }
@@ -264,26 +269,37 @@ static bool mappantouch = false, mappanned = false;
 static int panlastx = 0, panlasty = 0;
 bool N3DS_MapZoomUpdate (bool touching, int x, int y)
 {
-    if (touching && !zoomwastouching)
+       if (touching && !zoomwastouching)
     {
-        zoomowntouch = zoomy >= 0 && y >= zoomy && y < zoomy + zoombuttonh
-                       && ((x >= zoomminusx && x < zoomminusx + zoombuttonw)
-                           || (x >= zoomplusx && x < zoomplusx + zoombuttonw));
+        int helpx = zoomminusx - zoombuttonw - 4;
+        bool helphit = zoomy >= 0 && y >= zoomy && y < zoomy + zoombuttonh
+                       && x >= helpx && x < helpx + zoombuttonw;
 
-        if (zoomowntouch)
+        if (helphit || (showlegend && y >= lastmaptop && y < lastmapbottom))
         {
-            if (x < zoomplusx && mapzoom > 0)
-                mapzoom--;
-            else if (x >= zoomplusx && mapzoom < NUMMAPZOOMS - 1)
-                mapzoom++;
+            showlegend = !showlegend;
+            zoomowntouch = true;
         }
-        else if (y >= lastmaptop && y < lastmapbottom)
+        else
         {
-            // Inicia toque dentro del área del mapa (fuera de botones de zoom y teclado)
-            mappantouch = true;
-            mappanned = false;
-            panlastx = x;
-            panlasty = y;
+            zoomowntouch = zoomy >= 0 && y >= zoomy && y < zoomy + zoombuttonh
+                           && ((x >= zoomminusx && x < zoomminusx + zoombuttonw)
+                               || (x >= zoomplusx && x < zoomplusx + zoombuttonw));
+
+            if (zoomowntouch)
+            {
+                if (x < zoomplusx && mapzoom > 0)
+                    mapzoom--;
+                else if (x >= zoomplusx && mapzoom < NUMMAPZOOMS - 1)
+                    mapzoom++;
+            }
+            else if (y >= lastmaptop && y < lastmapbottom)
+            {
+                mappantouch = true;
+                mappanned = false;
+                panlastx = x;
+                panlasty = y;
+            }
         }
     }
     else if (touching && mappantouch)
@@ -465,6 +481,8 @@ static void DrawMap (int maptop, int mapbottom)
     Fill ((int) playercx - 1, (int) playercy - 1, 3, 3, playercolor);
 
     DrawZoomButtons (mapbottom - zoombuttonh - 2);
+     if (showlegend)
+        DrawLegendOverlay (maptop, mapbottom);
 }
 
 // The keyboard on the bottom screen draws with this.
