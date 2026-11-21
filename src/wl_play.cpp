@@ -732,6 +732,18 @@ void CheckKeys (void)
             DrawPlayBorder ();
     }
 
+	// SECRET CHEAT CODE: 'VMP' (Revelar todo el automapa inferior)
+    if (Keyboard[sc_V] && Keyboard[sc_M] && Keyboard[sc_P])
+    {
+        memset (spotvis, 1, sizeof (spotvis));
+        WindowH = 160;
+        Message ("Map revealed!");
+        IN_Ack ();
+        DrawPlayBorderSides ();
+        IN_ClearKeysDown ();
+        return;
+    }
+
     //
     // OPEN UP DEBUG KEYS
     //
