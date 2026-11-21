@@ -23,6 +23,7 @@
 
 extern int lastgamemusicoffset;
 extern int numEpisodesMissing;
+extern byte seen[MAPSIZE][MAPSIZE];
 
 //
 // PRIVATE PROTOTYPES
@@ -1593,6 +1594,10 @@ CP_LoadGame (int quick)
             loadedgame = true;
             LoadTheGame (file, 0, 0);
             loadedgame = false;
+            if (fread (seen, sizeof (seen), 1, file) != 1)
+            {
+            memset (seen, 0, sizeof (seen));
+            }
             fclose (file);
 
             DrawFace ();
@@ -1640,6 +1645,10 @@ CP_LoadGame (int quick)
             loadedgame = true;
 
             LoadTheGame (file, LSA_X + 8, LSA_Y + 5);
+            if (fread (seen, sizeof (seen), 1, file) != 1)
+            {
+                memset (seen, 0, sizeof (seen));
+            }
             fclose (file);
 
             StartGame = 1;
@@ -1811,6 +1820,7 @@ CP_SaveGame (int quick)
             fwrite (input, 1, 32, file);
             fseek (file, 32, SEEK_SET);
             SaveTheGame (file, 0, 0);
+            fwrite (seen, sizeof (seen), 1, file);
             CloseSave (file);
 
 #ifdef _arch_dreamcast
@@ -1885,7 +1895,7 @@ CP_SaveGame (int quick)
 
                 DrawLSAction (1);
                 SaveTheGame (file, LSA_X + 8, LSA_Y + 5);
-
+                fwrite (seen, sizeof (seen), 1, file);
                 CloseSave (file);
 
 #ifdef _arch_dreamcast
