@@ -18,6 +18,7 @@ Runs at full speed on New 3DS.
 - No DOS memory check screen at startup.
 - **Spear of Destiny mission packs:** if the `sod` folder has more than one mission (*Return to Danger* `*.sd2`, *Ultimate Challenge* `*.sd3`), a menu at startup lets you choose. Each mission keeps its own config and savegames.
 - `.3dsx` and `.cia` builds for Wolfenstein 3D (full and shareware) and Spear of Destiny (full and demo).
+- Mapa Mejorado: Ahora el mapa no se resetea al cargar una partida guardada. Los secretos y los enemigos se muestran en el mapa.
 
 ## Installing
 
