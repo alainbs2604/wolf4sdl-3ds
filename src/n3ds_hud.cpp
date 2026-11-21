@@ -19,7 +19,7 @@ int mapzoom = 2;
 
 // Tiles seen since the level started: the original has no map, so this one
 // shows only what the player has seen (spotvis, cleared every frame).
-static byte seen[MAPSIZE][MAPSIZE];
+byte seen[MAPSIZE][MAPSIZE];
 
 boolean N3DS_HudVisible (void)
 {
