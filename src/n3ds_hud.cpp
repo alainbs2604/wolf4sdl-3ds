@@ -16,6 +16,7 @@ boolean showmap = true;
 boolean showfps = false;
 boolean weaponbar = false;
 int mapzoom = 2;
+bool showenemies = false;
 
 // Tiles seen since the level started: the original has no map, so this one
 // shows only what the player has seen (spotvis, cleared every frame).
@@ -244,18 +245,20 @@ static void DrawMap (int maptop, int mapbottom)
         }
     }
         // 2. Dibujar enemigos vivos
-                // 2. Dibujar enemigos vivos
-        for (objtype *ob = player->next; ob; ob = ob->next)
-        {
-            if (ob->flags & FL_SHOOTABLE)
+         if (showenemies){
+             
+            for (objtype *ob = player->next; ob; ob = ob->next)
             {
-                double ex = (double) ob->x / TILEGLOBAL;
-                double ey = (double) ob->y / TILEGLOBAL;
-                Fill ((int) floor (centerx + (ex - px - 0.25) * tilesize),
-                      (int) floor (centery + (ey - py - 0.25) * tilesize),
-                      enemysize, enemysize, enemycolor);
-            }
+                if (ob->flags & FL_SHOOTABLE)
+                {
+                    double ex = (double) ob->x / TILEGLOBAL;
+                    double ey = (double) ob->y / TILEGLOBAL;
+                    Fill ((int) floor (centerx + (ex - px - 0.25) * tilesize),
+                          (int) floor (centery + (ey - py - 0.25) * tilesize),
+                          enemysize, enemysize, enemycolor);
+                }
         }
+    }
     // The player: a dot and a line toward where they look (angle in
     // degrees, 0 is east, counterclockwise).
     double angle = player->angle * M_PI / 180;
