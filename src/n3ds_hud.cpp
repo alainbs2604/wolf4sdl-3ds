@@ -261,7 +261,6 @@ static void DrawMap (int maptop, int mapbottom)
                 case bo_key2:
                 case bo_key3:
                 case bo_key4:
-                case bo_1up:
                     color = itemcolor;
                     break;
 
