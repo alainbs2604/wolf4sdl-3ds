@@ -295,6 +295,7 @@ static void DrawMap (int maptop, int mapbottom)
                 default:
                     continue;
             }
+        }
         // 2. Dibujar enemigos vivos
          if (showenemies){
              
