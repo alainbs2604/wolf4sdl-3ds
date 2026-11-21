@@ -23,6 +23,7 @@ Esto es solo un Fork de [wolf4sdl-3ds](https://github.com/AlexanderV387/wolf4sdl
 - Mapa Mejorado:
      - Ahora el mapa no se resetea al cargar una partida guardada.
      - Los secretos se muestran en el mapa en color verde
+     - Opción de mostrar/ocultar los items del mapa con el codigo ITM
      - El personaje es blanco en lugar de rojo
      - Los enemigos se puede mostrar o ocultar con el código ENM (aparecen como un punto rojo)
      - El mapa se puede desplazar con la táctil para una mejor visión de zonas alejadas y se centra con un toque
