@@ -406,14 +406,14 @@ static void DrawMap (int maptop, int mapbottom)
     }
          // 1. Dibujar ítems por tipo
         if (showitems){
-            for (statobj_t *statptr = statobjlist; statptr != laststatobj; statptr++){
-            if (statptr->shapenum == -1 || statptr->itemnumber < bo_firstaid)
-                continue;
+             for (statobj_t *statptr = statobjlist; statptr != laststatobj; statptr++){
+                if (statptr->shapenum == -1 || !(statptr->flags & FL_BONUS))
+                    continue;
 
             Fill ((int) floor (centerx + (statptr->tilex - px + 0.3) * tilesize),
                   (int) floor (centery + (statptr->tiley - py + 0.3) * tilesize),
                   itemsize, itemsize, itemcolor);
-            }
+        }
         }
         // 2. Dibujar enemigos vivos
          if (showenemies){
