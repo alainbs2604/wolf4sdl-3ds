@@ -290,7 +290,7 @@ static void DrawMap (int maptop, int mapbottom)
          // 1. Dibujar ítems por tipo
         for (statobj_t *statptr = statobjlist; statptr != laststatobj; statptr++)
         {
-            if (statptr->shapenum == -1)
+         if (statptr->shapenum == -1 || !(statptr->flags & FL_BONUS))
                 continue;
 
             Uint32 color;
@@ -333,7 +333,8 @@ static void DrawMap (int maptop, int mapbottom)
 
                 // Ignorar decoración (lámparas, mesas, esqueletos, columnas...)
                 default:
-                    continue;
+                    color = itemcolor;
+                    break;
             }
         }
         // 2. Dibujar enemigos vivos
