@@ -736,7 +736,7 @@ void CheckKeys (void)
 	// SECRET CHEAT CODE: 'VMP' (Revelar todo el automapa inferior)
     if (Keyboard[sc_V] && Keyboard[sc_M] && Keyboard[sc_P])
     {
-        memset (seen 1, sizeof (seen));
+        memset (seen, 1, sizeof (seen));
         WindowH = 160;
         Message ("Map revealed!");
         IN_Ack ();
