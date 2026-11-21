@@ -197,7 +197,7 @@ static void DrawMap (int maptop, int mapbottom)
     Uint32 background = SDL_MapRGB (format, 0x08, 0x08, 0x10);
     Uint32 floorcolor = SDL_MapRGB (format, 0x28, 0x38, 0x50);
     Uint32 wallcolor = SDL_MapRGB (format, 0xa8, 0xa8, 0xb8);
-    Uint32 doorcolor = SDL_MapRGB (format, 0xe0, 0xb0, 0x30);
+    Uint32 doorcolor = SDL_MapRGB (format, 0xff, 0xe6, 0x00);
     Uint32 secretcolor = SDL_MapRGB (format, 0x00, 0xff, 0x80);
     Uint32 playercolor = SDL_MapRGB (format, 0xff, 0x40, 0x40);
 
