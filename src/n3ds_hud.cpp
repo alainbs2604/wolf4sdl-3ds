@@ -200,7 +200,6 @@ static void DrawMap (int maptop, int mapbottom)
     Uint32 doorcolor = SDL_MapRGB (format, 0xff, 0xe6, 0x00);
     Uint32 secretcolor = SDL_MapRGB (format, 0x00, 0xff, 0x80);
     UUint32 playercolor = SDL_MapRGB (format, 0xff, 0xff, 0xff);
-    Uint32 itemcolor = SDL_MapRGB (format, 0x00, 0xd0, 0xff)
     Uint32 enemycolor = SDL_MapRGB (format, 0xff, 0x00, 0x00);  // Rojo: enemigos vivos
 
     cliptop = maptop;
