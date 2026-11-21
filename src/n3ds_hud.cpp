@@ -157,7 +157,10 @@ static void DrawZoomButtons (int y)
 
     zoomy = y;
 }
-
+static double mapoffx = 0.0, mapoffy = 0.0;
+static int lastmaptop = 0, lastmapbottom = 0;
+static bool mappantouch = false, mappanned = false;
+static int panlastx = 0, panlasty = 0;
 bool N3DS_MapZoomUpdate (bool touching, int x, int y)
 {
     if (touching && !zoomwastouching)
@@ -221,10 +224,7 @@ bool N3DS_MapOwnsTouch (void)
 }
 
 // Between maptop and mapbottom, centred on the player, at the zoom chosen.
-static double mapoffx = 0.0, mapoffy = 0.0;
-static int lastmaptop = 0, lastmapbottom = 0;
-static bool mappantouch = false, mappanned = false;
-static int panlastx = 0, panlasty = 0;
+
 static void DrawMap (int maptop, int mapbottom)
 {
     lastmaptop = maptop;
