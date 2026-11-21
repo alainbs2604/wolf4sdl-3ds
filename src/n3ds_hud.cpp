@@ -355,10 +355,12 @@ static void DrawMap (int maptop, int mapbottom)
     // degrees, 0 is east, counterclockwise).
     double angle = player->angle * M_PI / 180;
     double dx = cos (angle), dy = -sin (angle);
+    double playercx = centerx - mapoffx * tilesize;
+    double playercy = centery - mapoffy * tilesize;
 
     for (int i = 0; i <= 2 * tilesize; i++)
-        Fill ((int) (centerx + dx * i), (int) (centery + dy * i), 1, 1, playercolor);
-    Fill ((int) centerx - 1, (int) centery - 1, 3, 3, playercolor);
+        Fill ((int) (playercx + dx * i), (int) (playercy + dy * i), 1, 1, playercolor);
+    Fill ((int) playercx - 1, (int) playercy - 1, 3, 3, playercolor);
 
     DrawZoomButtons (mapbottom - zoombuttonh - 2);
 }
