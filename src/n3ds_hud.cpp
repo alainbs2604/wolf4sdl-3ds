@@ -248,7 +248,7 @@ static void DrawMap (int maptop, int mapbottom)
         }
     }
          // 1. Dibujar ítems por tipo
-        for (statobj_t *statptr = &statobjlist; statptr != laststatobj; statptr++)
+        for (statobj_t *statptr = statobjlist; statptr != laststatobj; statptr++)
         {
             if (statptr->shapenum == -1)
                 continue;
